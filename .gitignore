@@ -1,0 +1,7 @@
+.*
+!.gitignore
+!.gdbinit
+tags
+build
+template
+node_modules
