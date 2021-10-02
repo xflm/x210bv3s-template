@@ -36,7 +36,7 @@ BUILD_TYPE = profile
 LINK_FILE = arch/$(RUN_TYPE).lds
 
 # Append global macro
-USERDEFINES = 
+USERDEFINES =
 
 # Append cpu infomation
 USERCPU  = -mcpu=cortex-a8
@@ -57,14 +57,14 @@ USERLDFLAGS +=
 VPATH_MODE = 
 
 # Use garbage collection mode, y is enable, default is disable
-GARBAGE_COLLECTION = y
+GARBAGE_COLLECTION = n
 
 # Create files, y is create, default is not create
 CREATE_DIS = 
 CREATE_ASM = y
 CREATE_BIN = y
 CREATE_HEX = 
-CREATE_MAP = 
+CREATE_MAP = y
 CREATE_GC  = 
 
 # Define shell cmd, run before and after compile

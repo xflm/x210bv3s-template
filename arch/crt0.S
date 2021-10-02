@@ -94,7 +94,6 @@ to_main:
 	bl	main
 	b	.
 
-
 	.section	.bl1_header,	"a",	%progbits
 	.type		bl1_header,	%object
 	.align		2
@@ -104,7 +103,7 @@ bl1_header:
 	.word	0x00000000     /* reserved (should be 0) */
 	.word	0x00000000     /* check sum, this write by other tool */
 	.word	0x00000000     /* reserved (should be 0) */
-	b	Reset_Handler  /* entry */
+	b		Reset_Handler  /* entry */
 	
 	
 	.section	.vector,	"a",	%progbits

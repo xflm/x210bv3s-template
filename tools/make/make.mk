@@ -375,3 +375,4 @@ endif
 -include $(TEMPLATE)/tools/make/slim.mk
 -include $(TEMPLATE)/tools/make/tags.mk
 -include $(TEMPLATE)/tools/make/sd.mk
+-include $(TEMPLATE)/tools/make/usb.mk

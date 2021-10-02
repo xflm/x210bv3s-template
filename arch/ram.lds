@@ -48,6 +48,7 @@ SECTIONS
 		*(.data)
 		*(.data.*)
 		. = ALIGN(0x4);
+		. = ALIGN(8192);
 		PROVIDE(_edata = .);
 	} > SRAM
 

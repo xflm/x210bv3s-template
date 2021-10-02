@@ -46,6 +46,9 @@ int main(int argc, const char * const argv[])
 	volatile uint32_t delay = 0xFFFF;
 
 	AllInit();
+	UART0_OutString("hello world!!!\n");
+	LED_On(LED_ALL);
+	while(1);
 
 	while(1)
 	{
