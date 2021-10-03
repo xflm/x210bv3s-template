@@ -7,4 +7,4 @@
 ###############################################################################
 # Download to sd card by /dev/secbulk1
 usb:
-	@dnw $(TARGET_BIN)
+	@serial_tool -b $(TARGET_BIN)
