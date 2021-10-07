@@ -1,109 +1,130 @@
 #include "vic_hw.h"
 #include "vic.h"
-#include "pad_hw.h"
-#include "led.h"
-#include <stdint.h>
 
-void VIC_Config(const VIC_ConfigStruct *config)
+void VIC_PreInit(void)
 {
-	VIC_Struct * VICx = &GVIC->V[config->vic];
-	uint32_t bit = 0x1<<config->port;
+	VIC_Struct pVic0 = (VIC_Struct)VIC0_BASE;
+	VIC_Struct pVic1 = (VIC_Struct)VIC1_BASE;
+	VIC_Struct pVic2 = (VIC_Struct)VIC2_BASE;
+	VIC_Struct pVic3 = (VIC_Struct)VIC3_BASE;
 
-	VICx->VECT_ADDR[config->port] = (uint32_t)config->func;
-	VICx->VEC_PRIORITY[config->port] = config->priority;
+	pVic0->INT_CLEAR = 0xFFFFFFFF;
+	pVic1->INT_CLEAR = 0xFFFFFFFF;
+	pVic2->INT_CLEAR = 0xFFFFFFFF;
+	pVic3->INT_CLEAR = 0xFFFFFFFF;
+}
 
-	if(config->type == VIC_TYPE_IRQ)
+void VIC_Register(const VIC_RegisterStruct *vic)
+{
+	VIC_Struct pVic = (VIC_Struct)vic->dev;
+	uint32_t bit = 0x1<<vic->port;
+
+	pVic->VECT_ADDR[vic->port] = (uint32_t)vic->func;
+	pVic->VEC_PRIORITY[vic->port] = vic->priority;
+
+	if(vic->type == VIC_TYPE_IRQ)
 	{
-		VICx->INT_SELECT &= ~bit;
+		pVic->INT_SELECT &= ~bit;
 	}
 	else
 	{
-		VICx->INT_SELECT |= bit;
+		pVic->INT_SELECT |= bit;
 	}
 
-	if(config->state == VIC_STATE_EN)
+	if(vic->state == VIC_STATE_EN)
 	{
-		VICx->INT_ENABLE |= bit;
+		pVic->INT_ENABLE |= bit;
 	}
 	else
 	{
-		VICx->INT_CLEAR |= bit;
+		pVic->INT_CLEAR |= bit;
 	}
 }
 
-void VIC_Enable(VIC_Enum vic, VICx_PortEnum port, VIC_StateEnum state)
+void VIC_Enable(MDevBase_t dev, uint32_t port)
 {
-	VIC_Struct * VICx = &GVIC->V[vic];
+	VIC_Struct pVic = (VIC_Struct)dev;
 	uint32_t bit = 0x1<<port;
 
-	if(state == VIC_STATE_EN)
-	{
-		VICx->INT_ENABLE |= bit;
-	}
-	else
-	{
-		VICx->INT_CLEAR |= bit;
-	}
+	pVic->INT_ENABLE |= bit;
+}
+
+void VIC_Disable(MDevBase_t dev, uint32_t port)
+{
+	VIC_Struct pVic = (VIC_Struct)dev;
+	uint32_t bit = 0x1<<port;
+
+	pVic->INT_CLEAR |= bit;
 }
 
 void IRQ_Handler(void)
 {
-	if(GVIC->V[0].IRQ_STATUS)
+	VIC_Struct pVic0 = (VIC_Struct)VIC0_BASE;
+	VIC_Struct pVic1 = (VIC_Struct)VIC1_BASE;
+	VIC_Struct pVic2 = (VIC_Struct)VIC2_BASE;
+	VIC_Struct pVic3 = (VIC_Struct)VIC3_BASE;
+
+	if(pVic0->IRQ_STATUS)
 	{
-		((VIC_Func)(GVIC->V[0].ADDRESS))();
-		GVIC->V[0].ADDRESS = 0;
+		((VIC_Func)(pVic0->ADDRESS))();
+		pVic0->ADDRESS = 0;
 		return;
 	}
 
-	if(GVIC->V[1].IRQ_STATUS)
+	if(pVic1->IRQ_STATUS)
 	{
-		((VIC_Func)(GVIC->V[1].ADDRESS))();
-		GVIC->V[1].ADDRESS = 0;
+		((VIC_Func)(pVic1->ADDRESS))();
+		pVic1->ADDRESS = 0;
 		return;
 	}
 
-	if(GVIC->V[2].IRQ_STATUS)
+	if(pVic2->IRQ_STATUS)
 	{
-		((VIC_Func)(GVIC->V[2].ADDRESS))();
-		GVIC->V[2].ADDRESS = 0;
+		((VIC_Func)(pVic2->ADDRESS))();
+		pVic2->ADDRESS = 0;
 		return;
 	}
 
-	if(GVIC->V[3].IRQ_STATUS)
+	if(pVic3->IRQ_STATUS)
 	{
-		((VIC_Func)(GVIC->V[3].ADDRESS))();
-		GVIC->V[3].ADDRESS = 0;
+		((VIC_Func)(pVic3->ADDRESS))();
+		pVic3->ADDRESS = 0;
 		return;
 	}
 }
 
 void FIQ_Handler(void)
 {
-	if(GVIC->V[0].FIQ_STATUS)
+	VIC_Struct pVic0 = (VIC_Struct)VIC0_BASE;
+	VIC_Struct pVic1 = (VIC_Struct)VIC1_BASE;
+	VIC_Struct pVic2 = (VIC_Struct)VIC2_BASE;
+	VIC_Struct pVic3 = (VIC_Struct)VIC3_BASE;
+
+	if(pVic0->FIQ_STATUS)
 	{
-		((VIC_Func)(GVIC->V[0].ADDRESS))();
-		GVIC->V[0].ADDRESS = 0;
+		((VIC_Func)(pVic0->ADDRESS))();
+		pVic0->ADDRESS = 0;
 		return;
 	}
 
-	if(GVIC->V[1].FIQ_STATUS)
+	if(pVic1->FIQ_STATUS)
 	{
-		((VIC_Func)(GVIC->V[1].ADDRESS))();
-		GVIC->V[1].ADDRESS = 0;
+		((VIC_Func)(pVic1->ADDRESS))();
+		pVic1->ADDRESS = 0;
 		return;
 	}
 
-	if(GVIC->V[2].FIQ_STATUS)
+	if(pVic2->FIQ_STATUS)
 	{
-		((VIC_Func)(GVIC->V[2].ADDRESS))();
-		GVIC->V[2].ADDRESS = 0;
+		((VIC_Func)(pVic2->ADDRESS))();
+		pVic2->ADDRESS = 0;
 		return;
 	}
 
-	if(GVIC->V[3].FIQ_STATUS)
+	if(pVic3->FIQ_STATUS)
 	{
-		((VIC_Func)(GVIC->V[3].ADDRESS))();
-		GVIC->V[3].ADDRESS = 0;
+		((VIC_Func)(pVic3->ADDRESS))();
+		pVic3->ADDRESS = 0;
 		return;
 	}
 }

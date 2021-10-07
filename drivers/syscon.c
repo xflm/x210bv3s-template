@@ -1,24 +1,18 @@
-#include "syscon_hw.h"
-#include "syscon_conf.h"
 #include "syscon.h"
-#include <stdint.h>
+#include "syscon_hw.h"
 
 
-void SYSCON_Init(void)
+void SYSCON_PreInit(void)
 {
-#if 0
-	uint32_t tmp;
+	SYSCON_Struct pSyscon = (SYSCON_Struct)SYSCON_BASE;
 
-	/*************************_UART0_*************************/
-	tmp = SYSCON->CLK_SRC4;
-	tmp &= ~(SYSCON_CLK_SEL_MASK<<SYSCON_CLK_SEL4_UART0);
-	tmp |= SYSCON_CLK_SEL_XUSBXTI<<SYSCON_CLK_SEL4_UART0;
-	SYSCON->CLK_SRC4 = tmp;
-
-	tmp = SYSCON->CLK_DIV4;
-	tmp &= ~(SYSCON_CLK_DIV_MASK<<SYSCON_CLK_DIV4_UART0);
-	tmp |= SYSCON_CLK_DIV_1<<SYSCON_CLK_DIV4_UART0;
-	SYSCON->CLK_DIV4 = tmp;
-	/*************************_UART0_*************************/
-#endif
+	pSyscon->CLK_GATE_IP0 = SYSCON_CLK_GATE_IP0_IMEM;
+	pSyscon->CLK_GATE_IP1 = 0x00000000;
+	pSyscon->CLK_GATE_IP2 = SYSCON_CLK_GATE_IP2_VIC0 |
+	                        SYSCON_CLK_GATE_IP2_VIC1 |
+	                        SYSCON_CLK_GATE_IP2_VIC2 |
+	                        SYSCON_CLK_GATE_IP2_VIC3;
+	pSyscon->CLK_GATE_IP3 = SYSCON_CLK_GATE_IP3_SYSCON| 0xFFFFFFFF;
+	pSyscon->CLK_GATE_IP4 = 0x00000000;
+	pSyscon->CLK_GATE_IP5 &= ~SYSCON_CLK_GATE_IP5_CLK_JPEG;
 }

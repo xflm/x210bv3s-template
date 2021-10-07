@@ -25,18 +25,34 @@ SECTIONS
 		. = ALIGN(4);
 		KEEP(*(.text.keep.user))
 		. = ALIGN(4);
-		*(.text)
-		*(.text.*)
-		*(.glue_7)
-		*(.glue_7t)
+		*(.text.unlikely .text.*_unlikely .text.unlikely.*)
+		*(.text.exit .text.exit.*)
+		*(.text.startup .text.startup.*)
+		*(.text.hot .text.hot.*)
+		*(SORT(.text.sorted.*))
+		*(.text .stub .text.* .gnu.linkonce.t.*)
+		/* .gnu.warning sections are handled specially by elf.em.  */
+		*(.gnu.warning)
+		*(.glue_7t) *(.glue_7) *(.vfp11_veneer) *(.v4_bx)
 	} > SRAM
 
 	.rodata : {
 		. = ALIGN(4);
-		*(.rodata)
-		*(.rodata.*)
+		*(.rodata .rodata.* .gnu.linkonce.r.*)
+		*(.rodata1)
 		. = ALIGN(4);
 	} > SRAM
+
+	.ARM.extab : {
+		*(.ARM.extab* .gnu.linkonce.armextab.*)
+	} > SRAM
+
+	.ARM.exidx : {
+		PROVIDE_HIDDEN (__exidx_start = .);
+		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
+		PROVIDE_HIDDEN (__exidx_end = .);
+	} > SRAM
+
 
 	PROVIDE(_sidata = LOADADDR(.data));
 

@@ -1,0 +1,123 @@
+#ifndef _SOC_H_
+#define _SOC_H_
+
+#include "mdev.h"
+
+/*************** Memory Map ***************/
+#define SOC_DRAM0_START_ADDR             0x20000000 /* 512MB */
+#define SOC_DRAM0_END_ADDR               0x3FFFFFFF
+#define SOC_DRAM1_START_ADDR             0x40000000 /* 1GB */
+#define SOC_DRAM1_END_ADDR               0x7FFFFFFF
+#define SOC_IROM_START_ADDR              0xD0000000 /* 64KB */
+#define SOC_IROM_END_ADDR                0xD000FFFF
+#define SOC_IRAM_START_ADDR              0xD0020000 /* 96KB */
+#define SOC_IRAM_END_ADDR                0xD0037FFF
+
+/********* Peripheral Address Map **********/
+#define SOC_CHIPID_BASE_ADDR             0xE0000000 /* 0xE00FFFFF */
+#define SOC_SYSCON_BASE_ADDR             0xE0100000 /* 0xE01FFFFF */
+#define SOC_GPIO_BASE_ADDR               0xE0200000 /* 0xE02FFFFF */
+#define SOC_AXI_DMA_BASE_ADDR            0xE0300000 /* 0xE03FFFFF */
+#define SOC_AXI_PSYS_BASE_ADDR           0xE0400000 /* 0xE04FFFFF */
+#define SOC_AXI_PSFR_BASE_ADDR           0xE0500000 /* 0xE05FFFFF */
+#define SOC_TZPC2_BASE_ADDR              0xE0600000 /* 0xE06FFFFF */
+#define SOC_IEM_APC_BASE_ADDR            0xE0700000 /* 0xE07FFFFF */
+#define SOC_IEM_IEC_BASE_ADDR            0xE0800000 /* 0xE08FFFFF */
+#define SOC_PDMA0_BASE_ADDR              0xE0900000 /* 0xE09FFFFF */
+#define SOC_PDMA1_BASE_ADDR              0xE0A00000 /* 0xE0AFFFFF */
+#define SOC_CORESIGHT_BASE_ADDR          0xE0D00000 /* 0xE0DFFFFF */
+#define SOC_SECKEY_BASE_ADDR             0xE0E00000 /* 0xE0EFFFFF */
+#define SOC_ASYNC_AUDIO_PSYS_BASE_ADDR   0xE0F00000 /* 0xE0FFFFFF */
+#define SOC_SPDIF_BASE_ADDR              0xE1100000 /* 0xE11FFFFF */
+#define SOC_PCM1_BASE_ADDR               0xE1200000 /* 0xE12FFFFF */
+#define SOC_SPI0_BASE_ADDR               0xE1300000 /* 0xE13FFFFF */
+#define SOC_SPI1_BASE_ADDR               0xE1400000 /* 0xE14FFFFF */
+#define SOC_KEYIF_BASE_ADDR              0xE1600000 /* 0xE16FFFFF */
+#define SOC_TSADC_BASE_ADDR              0xE1700000 /* 0xE17FFFFF */
+#define SOC_I2C0 (general)_BASE_ADDR     0xE1800000 /* 0xE18FFFFF */
+#define SOC_I2C2 (PMIC)_BASE_ADDR        0xE1A00000 /* 0xE1AFFFFF */
+#define SOC_HDMI_CEC_BASE_ADDR           0xE1B00000 /* 0xE1BFFFFF */
+#define SOC_TZPC3_BASE_ADDR              0xE1C00000 /* 0xE1CFFFFF */
+#define SOC_AXI_GSYS_BASE_ADDR           0xE1D00000 /* 0xE1DFFFFF */
+#define SOC_ASYNC_PSFR_AUDIO_BASE_ADDR   0xE1F00000 /* 0xE1FFFFFF */
+#define SOC_I2S1_BASE_ADDR               0xE2100000 /* 0xE21FFFFF */
+#define SOC_AC97_BASE_ADDR               0xE2200000 /* 0xE22FFFFF */
+#define SOC_PCM0_BASE_ADDR               0xE2300000 /* 0xE23FFFFF */
+#define SOC_PWM_BASE_ADDR                0xE2500000 /* 0xE25FFFFF */
+#define SOC_ST_BASE_ADDR                 0xE2600000 /* 0xE26FFFFF */
+#define SOC_WDT_BASE_ADDR                0xE2700000 /* 0xE27FFFFF */
+#define SOC_RTC_APBIF_BASE_ADDR          0xE2800000 /* 0xE28FFFFF */
+#define SOC_UART_BASE_ADDR               0xE2900000 /* 0xE29FFFFF */
+#define SOC_SROMC_BASE_ADDR              0xE8000000 /* 0xE80FFFFF */
+#define SOC_CFCON_BASE_ADDR              0xE8200000 /* 0xE82FFFFF */
+#define SOC_SECSS_BASE_ADDR              0xEA000000 /* 0xEA0FFFFF */
+#define SOC_SDMMC0_BASE_ADDR             0xEB000000 /* 0xEB0FFFFF */
+#define SOC_SDMMC1_BASE_ADDR             0xEB100000 /* 0xEB1FFFFF */
+#define SOC_SDMMC2_BASE_ADDR             0xEB200000 /* 0xEB2FFFFF */
+#define SOC_SDMMC3_BASE_ADDR             0xEB300000 /* 0xEB3FFFFF */
+#define SOC_TSI_BASE_ADDR                0xEB400000 /* 0xEB4FFFFF */
+#define SOC_USBOTG_BASE_ADDR             0xEC000000 /* 0xEC0FFFFF */
+#define SOC_USBOTG_PHY_CON_BASE_ADDR     0xEC100000 /* 0xEC1FFFFF */
+#define SOC_USBHOST_EHCI_BASE_ADDR       0xEC200000 /* 0xEC2FFFFF */
+#define SOC_USBHOST_OHCI_BASE_ADDR       0xEC300000 /* 0xEC3FFFFF */
+#define SOC_MODEM_BASE_ADDR              0xED000000 /* 0xED0FFFFF */
+#define SOC_HOST_BASE_ADDR               0xED100000 /* 0xED1FFFFF */
+#define SOC_AUDIO_SS_BASE_ADDR           0xEE000000 /* 0xEE8FFFFF */
+#define SOC_AUDIO_SS_ASS_DMA_BASE_ADDR   0xEE900000 /* 0xEE9FFFFF */
+#define SOC_AUDIO_SS_ASS_IBUF0_BASE_ADDR 0xEEA00000 /* 0xEEAFFFFF */
+#define SOC_AUDIO_SS_ASS_IBUF1_BASE_ADDR 0xEEB00000 /* 0xEEBFFFFF */
+#define SOC_AUDIO_SS_ASS_OBUF0_BASE_ADDR 0xEEC00000 /* 0xEECFFFFF */
+#define SOC_AUDIO_SS_ASS_OBUF1_BASE_ADDR 0xEED00000 /* 0xEEDFFFFF */
+#define SOC_AUDIO_SS_ASS_APB_BASE_ADDR   0xEEE00000 /* 0xEEEFFFFF */
+#define SOC_AUDIO_SS_ASS_ODO_BASE_ADDR   0xEEF00000 /* 0xEEFFFFFF */
+#define SOC_DMC0_SFR_BASE_ADDR           0xF0000000 /* 0xF00FFFFF */
+#define SOC_AXI_MSYS_BASE_ADDR           0xF1000000 /* 0xF10FFFFF */
+#define SOC_AXI_MSFR_BASE_ADDR           0xF1100000 /* 0xF11FFFFF */
+#define SOC_AXI_VSYS_BASE_ADDR           0xF1200000 /* 0xF12FFFFF */
+#define SOC_DMC1_SFR_BASE_ADDR           0xF1400000 /* 0xF14FFFFF */
+#define SOC_TZPC0_BASE_ADDR              0xF1500000 /* 0xF15FFFFF */
+#define SOC_SDM_BASE_ADDR                0xF1600000 /* 0xF16FFFFF */
+#define SOC_MFC_BASE_ADDR                0xF1700000 /* 0xF17FFFFF */
+#define SOC_ASYNC_MFC_VSYS0_BASE_ADDR    0xF1800000 /* 0xF18FFFFF */
+#define SOC_ASYNC_MFC_VSYS1_BASE_ADDR    0xF1900000 /* 0xF19FFFFF */
+#define SOC_ASYNC_DSYS_MSYS0_BASE_ADDR   0xF1A00000 /* 0xF1AFFFFF */
+#define SOC_ASYNC_DSYS_MSYS1_BASE_ADDR   0xF1B00000 /* 0xF1BFFFFF */
+#define SOC_ASYNC_MSFR_DSFR_BASE_ADDR    0xF1C00000 /* 0xF1CFFFFF */
+#define SOC_ASYNC_MSFR_PSFR_BASE_ADDR    0xF1D00000 /* 0xF1DFFFFF */
+#define SOC_ASYNC_MSYS_DMC0_BASE_ADDR    0xF1E00000 /* 0xF1EFFFFF */
+#define SOC_ASYNC_MSFR_MPERI_BASE_ADDR   0xF1F00000 /* 0xF1FFFFFF */
+#define SOC_VIC0_BASE_ADDR               0xF2000000 /* 0xF20FFFFF */
+#define SOC_VIC1_BASE_ADDR               0xF2100000 /* 0xF21FFFFF */
+#define SOC_VIC2_BASE_ADDR               0xF2200000 /* 0xF22FFFFF */
+#define SOC_VIC3_BASE_ADDR               0xF2300000 /* 0xF23FFFFF */
+#define SOC_TZIC0_BASE_ADDR              0xF2800000 /* 0xF28FFFFF */
+#define SOC_TZIC1_BASE_ADDR              0xF2900000 /* 0xF29FFFFF */
+#define SOC_TZIC2_BASE_ADDR              0xF2A00000 /* 0xF2AFFFFF */
+#define SOC_TZIC3_BASE_ADDR              0xF2B00000 /* 0xF2BFFFFF */
+#define SOC_G3D_BASE_ADDR                0xF3000000 /* 0xF3FFFFFF */
+#define SOC_FIMD_BASE_ADDR               0xF8000000 /* 0xF80FFFFF */
+#define SOC_TVENC_BASE_ADDR              0xF9000000 /* 0xF90FFFFF */
+#define SOC_VP_BASE_ADDR                 0xF9100000 /* 0xF91FFFFF */
+#define SOC_MIXER_BASE_ADDR              0xF9200000 /* 0xF92FFFFF */
+#define SOC_G2D_BASE_ADDR                0xFA000000 /* 0xFA0FFFFF */
+#define SOC_HDMI_LINK_BASE_ADDR          0xFA100000 /* 0xFA1FFFFF */
+#define SOC_SMDMA_BASE_ADDR              0xFA200000 /* 0xFA2FFFFF */
+#define SOC_ROT_BASE_ADDR                0xFA300000 /* 0xFA3FFFFF */
+#define SOC_AXI_LSYS_BASE_ADDR           0xFA400000 /* 0xFA4FFFFF */
+#define SOC_DSIM_BASE_ADDR               0xFA500000 /* 0xFA5FFFFF */
+#define SOC_CSIS_BASE_ADDR               0xFA600000 /* 0xFA6FFFFF */
+#define SOC_AXI_DSYS_BASE_ADDR           0xFA700000 /* 0xFA7FFFFF */
+#define SOC_AXI_DSFR_BASE_ADDR           0xFA800000 /* 0xFA8FFFFF */
+#define SOC_I2C_HDMI_PHY_BASE_ADDR       0xFA900000 /* 0xFA9FFFFF */
+#define SOC_AXI_TSYS_BASE_ADDR           0xFAA00000 /* 0xFAAFFFFF */
+#define SOC_I2C_HDMI_DDC_BASE_ADDR       0xFAB00000 /* 0xFABFFFFF */
+#define SOC_AXI_XSYS_BASE_ADDR           0xFAC00000 /* 0xFACFFFFF */
+#define SOC_TZPC1_BASE_ADDR              0xFAD00000 /* 0xFADFFFFF */
+#define SOC_ASYNC_PSYS_DSYS_u0_BASE_ADDR 0xFAF00000 /* 0xFAFFFFFF */
+#define SOC_FIMC0_BASE_ADDR              0xFB200000 /* 0xFB2FFFFF */
+#define SOC_FIMC1_BASE_ADDR              0xFB300000 /* 0xFB3FFFFF */
+#define SOC_FIMC2_BASE_ADDR              0xFB400000 /* 0xFB4FFFFF */
+#define SOC_JPEG_BASE_ADDR               0xFB600000 /* 0xFB6FFFFF */
+
+
+#endif /* _SOC_H_ */

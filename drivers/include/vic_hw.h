@@ -37,12 +37,6 @@ typedef struct {
 	_OR PERIPHID[4];          /* Offset 0x0FE0 */
 	_OR PCELLID[4];           /* Offset 0x0FF0 */
 	_NU RESERVED4[261120];    /* Reserved 0xFF000*/
-} VIC_Struct;
-
-typedef struct {
-	VIC_Struct V[4];
-} GVIC_Struct;
-
-static GVIC_Struct * const GVIC = (GVIC_Struct *)VIC0_BASE_ADDR;
+} * const VIC_Struct;
 
 #endif /* _VIC_HW_H_ */

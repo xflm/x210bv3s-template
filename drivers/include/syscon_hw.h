@@ -1,10 +1,10 @@
-#ifndef _CLK_HW_H_
-#define _CLK_HW_H_
+#ifndef _SYSCON_HW_H_
+#define _SYSCON_HW_H_
 
 #include "soc.h"
 
 typedef struct {
-	_RW APP_LOCK;           /* Offset 0x0000 */
+	_RW APLL_LOCK;          /* Offset 0x0000 */
 	_NU RESERVED0[1];       /* Reserved 0x0004 */
 	_RW MPLL_LOCK;          /* Offset 0x0008 */
 	_NU RESERVED1[1];       /* Reserved 0x0004 */
@@ -72,7 +72,7 @@ typedef struct {
 	_NU RESERVED19[7];      /* Reserved 0x001C */
 	_RW FREQ_CPU;           /* Offset 0x3060 */
 	_RW FREQ_DPM;           /* Offset 0x3064 */
-	_NU RESERVED20[6];     /* Reserved 0x0018 */
+	_NU RESERVED20[6];      /* Reserved 0x0018 */
 	_RW DVSEMCLK_EN;        /* Offset 0x3080 */
 	_RW MAXPERF;            /* Offset 0x3084 */
 	_NU RESERVED21[30];     /* Reserved 0x0078 */
@@ -107,8 +107,6 @@ typedef struct {
 	_NU RESERVED25[961];    /* Reserved 0x0F04 */
 	_RW DISPLAY_CONTROL;    /* Offset 0x7008 */
 	_RW AUDIO_ENDIAN;       /* Offset 0x700C */
-} SYSCON_Struct;
+} * const SYSCON_Struct;
 
-static SYSCON_Struct * const SYSCON = (SYSCON_Struct *)SYSCON_BASE_ADDR;
-
-#endif /* _CLK_HW_H_ */
+#endif /* _SYSCON_HW_H_ */

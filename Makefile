@@ -57,7 +57,7 @@ USERLDFLAGS +=
 VPATH_MODE = 
 
 # Use garbage collection mode, y is enable, default is disable
-GARBAGE_COLLECTION = n
+GARBAGE_COLLECTION = y
 
 # Create files, y is create, default is not create
 CREATE_DIS = 

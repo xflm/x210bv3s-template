@@ -1,7 +1,7 @@
 ###############################################################################
 # Verison: v2.1.0
 # Author:  xflm
-# Date:    Fri 01 Oct 2021 10:53:44 PM CST
+# Date:    Wed 06 Oct 2021 12:13:00 AM CST
 ###############################################################################
  
 # Define asm file
@@ -13,7 +13,6 @@ SRC_FILE += main.c
 SRC_FILE += 
  
 # Define header path
-INC_PATH += include
 INC_PATH += 
  
 # Define library file
@@ -27,8 +26,8 @@ OTHER_FILE +=
 SPARE_FILE += 
  
 # Include sub file.mk
-FILE_PWD = drivers
+FILE_PWD = mboard
 include $(FILE_PWD)/file.mk
-FILE_PWD = app
+FILE_PWD = drivers
 include $(FILE_PWD)/file.mk
  
